@@ -307,7 +307,7 @@ if __name__ == "__main__":
     # HF_path = m_folder2 + 'HF_Peru_2018_GHF.tif'
     # purpose = 'curr'
     
-    m_folder2 = os.getcwd() + '/Peru_HH/HF_maps/b05_HF_maps/Pe_20220526_125158_SDG15//'  # Cambiar por el nombre de carpeta | por defecto Peru
+    m_folder2 = os.getcwd() + '/Peru_HH/HF_maps/b05_HF_maps/Pe_20220930_120709_SDG15//'
     HF_path = m_folder2 + 'HF_Peru_2018_GHF_300m.tif'
     purpose = 'SDG15'
 
@@ -330,7 +330,7 @@ if __name__ == "__main__":
     country_field = 'Country'
 
     # Fields for x and y
-    xfield = "POINT_X"
+    xfield = "POINT_X"  
     yfield = "POINT_Y"
     
     

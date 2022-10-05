@@ -199,7 +199,7 @@ years = (
 
 # indicator[1] the extra stats besides id, count, sum, categories
 indicators = [
-    ('Natural_habitat',['nh']),
+    # ('Natural_habitat',['nh']),
     ('Protected_areas',['']),
     ('Around_protected_Areas',['']),
               ]
@@ -217,7 +217,7 @@ for indicator in indicators:
 
     if settings['ecosystem_settings'] == 'peru':
         eco = {
-        'HF_folder': f'{os.getcwd()}/Peru_HH/HF_maps/b05_HF_maps/Pe_20220526_125158_SDG15//',
+        'HF_folder': f'{os.getcwd()}/Peru_HH/HF_maps/b05_HF_maps/Pe_20220930_120709_SDG15/',
 
         ## Ecosistemas MINAM
         'ecosyst_path': f'{os.getcwd()}/Peru_HH/Indicators/Shps/CobVeg_180615.shp',
@@ -295,6 +295,7 @@ for indicator in indicators:
     # Read or create full csv?
     ##########################
     csv_name_full = m_folder + f'{eco["country"]}_{indicator[0]}_completa{eco["safety_text"]}.csv'
+    print(csv_name_full)
     csv_exists = os.path.isfile(csv_name_full)
 
     # if csv_exists:
@@ -338,6 +339,8 @@ for indicator in indicators:
 
         # Create full dataframe and save
         nh_df_years_full = pd.concat(nh_df_list, ignore_index=True, sort=False)
+        print(nh_df_years_full.head())
+        print(nh_df_years_full.tail())
         
         # Replace values if needed
         dict_replace = {
@@ -413,17 +416,25 @@ for indicator in indicators:
 
     # Aggregate dataframes
     nh_df_years = nh_df_years[nh_df_years['count'] != '--']
+    nh_df_years["count"] = nh_df_years["count"].astype(float)
+    nh_df_years["sum"] = nh_df_years["sum"].astype(float)
     nh_aggr_df = nh_df_years.groupby(eco['categories'], as_index=False).agg(aggr_dict)
 
     # Calculate results for indicator
+    print("************************ AAAAA *********")
+    print(nh_aggr_df)
+    print("************************ BBBBB *********")
+    print(indicator[0])
+    print("************************ CCCCC *********")
     if indicator[0] in ('Natural_habitat', 'Natural_habitat_forest'):
         nh_aggr_df['indicator'] = 100 * nh_aggr_df["nh"] / nh_aggr_df['count']
     else:
         nh_aggr_df['indicator'] = np.round(nh_aggr_df["sum"] / nh_aggr_df['count'],5)
         
     print()
+    print("************************ DDDDD *********")
     print('Cumulative dataframe')
-    print(nh_aggr_df)       
+    print(nh_aggr_df)
     
 
     # Create graphs
